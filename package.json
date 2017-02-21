@@ -68,9 +68,12 @@
     "url": "git://github.com/GrottoCenter/Grottocenter3.git"
   },
   "devDependencies": {
+    "babel-jest": "^18.0.0",
     "babel-plugin-styled-components": "^1.2.1",
+    
     "eslint": "^3.12.2",
     "eslint-plugin-react": "^6.8.0",
+    "jest": "^18.1.0",
     "grunt-contrib-watch": "^0.5.3",
     "grunt-lesshint": "^1.5.0",
     "gruntify-eslint": "^3.1.0"
