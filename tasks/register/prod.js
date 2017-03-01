@@ -6,6 +6,7 @@ module.exports = function (grunt) {
     'concat',
     'uglify',
     'cssmin',
+    'imagemin',
     'sails-linker:prodJs',
     'sails-linker:prodStyles',
     'sails-linker:devTpl',
