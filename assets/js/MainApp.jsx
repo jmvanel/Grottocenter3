@@ -12,6 +12,7 @@ import HomepageFlat from './pages/HomepageFlat';
 import Faq from './components/Faq';
 import SigninForm from './components/SigninForm';
 import SignupForm from './components/SignupForm';
+import Map from './components/Map';
 
 import grottoTheme from './grottoTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -38,11 +39,12 @@ ReactDOM.render(
   <MuiThemeProvider muiTheme={getMuiTheme(grottoTheme)}>
     <Provider store={gcStore}>
       <Router history={browserHistory}>
+        <Route path="/map" component={Map}>
+        </Route>
         <Route path="/auth/" component={LightPage}>
           <Route path="/auth/signin" component={SigninForm}/>
           <Route path="/auth/signup" component={SignupForm}/>
         </Route>
-
         <Route path="/" component={StandardPage}>
           <IndexRoute component={HomepageFlat}/>
           <Route path="/ui/faq" component={Faq}/>
