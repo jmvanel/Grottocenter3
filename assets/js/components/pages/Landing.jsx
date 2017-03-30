@@ -7,6 +7,7 @@ import WhatIsIt from '../homepage/WhatIsIt';
 import RandomEntry from '../homepage/RandomEntry';
 import Partners from '../homepage/Partners';
 import Footer from '../homepage/Footer';
+import Faq from '../homepage/Faq';
 
 const Landing = () => (
   <div>
@@ -16,6 +17,7 @@ const Landing = () => (
     <RandomEntry/>
     <LatestBlogNewsSection/>
     <Association/>
+    <Faq/>
     <Partners/>
     <Footer/>
   </div>
