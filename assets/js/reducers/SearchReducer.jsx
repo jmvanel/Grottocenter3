@@ -1,4 +1,4 @@
-import {startSearch, loadCaveSuccess, loadEntrySuccess, loadGrottoSuccess, showMarker} from './../actions/Search';
+import {showMarker} from './../actions/Search';
 
 /*
     The marker centered on the Map component
@@ -9,17 +9,17 @@ import {startSearch, loadCaveSuccess, loadEntrySuccess, loadGrottoSuccess, showM
 export const marker = (state = [], action) => {
   switch (action.type) {
     case showMarker().type:// TODO useless mapping > send plain entry object to Map
-    return {
-          latlng:{
-              lat:action.entry.latitude,
-              lng:action.entry.longitude
-          },
-          text:action.entry.text,
-          altitude:action.entry.altitude?action.entry.altitude + 'm':'',
-          author:action.entry.author.nickname?action.entry.author.nickname:''
-    }
+      return {
+        latlng:{
+          lat:action.entry.latitude,
+          lng:action.entry.longitude
+        },
+        text:action.entry.text,
+        altitude:action.entry.altitude?action.entry.altitude + 'm':'',
+        author:action.entry.author.nickname?action.entry.author.nickname:''
+      };
     default://TODO no default marker on map
-      return state
+      return state;
   }
 };
 
@@ -33,7 +33,7 @@ export const caves = (state = [], action) => {
     case 'LOAD_CAVE_SUCCESS':
       return action.data;
     default:
-      return state
+      return state;
   }
 };
 
@@ -47,7 +47,7 @@ export const entries = (state = [], action) => {
     case 'LOAD_ENTRY_SUCCESS':
       return action.data;
     default:
-      return state
+      return state;
   }
 };
 
@@ -61,6 +61,6 @@ export const grottos = (state = [], action) => {
     case 'LOAD_GROTTO_SUCCESS':
       return action.data;
     default:
-      return state
+      return state;
   }
 };
