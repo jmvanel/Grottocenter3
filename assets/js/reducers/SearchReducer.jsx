@@ -1,5 +1,4 @@
-import { combineReducers } from "redux"
-import { showMarker } from './../actions/Search'
+import {startSearch, loadCaveSuccess, loadEntrySuccess, loadGrottoSuccess, showMarker} from './../actions/Search';
 
 /*
     The marker centered on the Map component
@@ -7,7 +6,7 @@ import { showMarker } from './../actions/Search'
     Has side info to print on popup & to make links to more info
     TODO : markers, a array of Mappable Object markers
 */
-const marker = (state = {}, action) => {
+export const marker = (state = [], action) => {
   switch (action.type) {
     case showMarker().type:// TODO useless mapping > send plain entry object to Map
     return {
@@ -22,12 +21,12 @@ const marker = (state = {}, action) => {
     default://TODO no default marker on map
       return state
   }
-}
+};
 
 /*
     The list of caves returned by the search
 */
-const caves = (state = [], action) => {
+export const caves = (state = [], action) => {
   switch (action.type) {
     case 'START_SEARCH':
       return [];
@@ -36,12 +35,12 @@ const caves = (state = [], action) => {
     default:
       return state
   }
-}
+};
 
 /*
     The list of entries returned by the search
 */
-const entries = (state = [], action) => {
+export const entries = (state = [], action) => {
   switch (action.type) {
     case 'START_SEARCH':
       return [];
@@ -50,12 +49,12 @@ const entries = (state = [], action) => {
     default:
       return state
   }
-}
+};
 
 /*
     The list of grottos returned by the search
 */
-const grottos = (state = [], action) => {
+export const grottos = (state = [], action) => {
   switch (action.type) {
     case 'START_SEARCH':
       return [];
@@ -64,12 +63,4 @@ const grottos = (state = [], action) => {
     default:
       return state
   }
-}
-
-export const searchReducers = combineReducers({
-  caves,
-  entries,
-  grottos,
-  marker
-});
-export default searchReducers;
+};

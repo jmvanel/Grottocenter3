@@ -4,49 +4,9 @@ import muiThemeable from 'material-ui/styles/muiThemeable';
 import GiftIcon from 'material-ui/svg-icons/action/card-giftcard';
 import FlatButton from 'material-ui/FlatButton';
 import GCLink from '../GCLink';
-
-let licenceLinks = {
-  'fr': 'https://creativecommons.org/licenses/by-sa/3.0/fr/',
-  'es': 'https://creativecommons.org/licenses/by-sa/3.0/deed.es_ES',
-  'ca': 'https://creativecommons.org/licenses/by-sa/3.0/deed.ca',
-  'de': 'https://creativecommons.org/licenses/by-sa/3.0/deed.de',
-  'pt': 'https://creativecommons.org/licenses/by-sa/3.0/deed.pt_PT',
-  'nl': 'https://creativecommons.org/licenses/by-sa/3.0/deed.nl',
-  'it': 'https://creativecommons.org/licenses/by-sa/3.0/deed.it'
-};
-
-let wikiBatsLinks = {};
-localesList.map(function(el) { // eslint-disable-line no-undef
-  let language = el.value;
-  language = language.substring(0, 1).toUpperCase() + language.substring(1, language.length);
-  wikiBatsLinks[el.value] = 'https://wiki.grottocenter.org/wiki/GrottoCenter:' + language + '/bats';
-}, this);
-
-let bloggerLinks = {
-  'fr': 'http://blog-fr.grottocenter.org/'
-};
-
-let bloggerIcons = {
-  'fr': 'blogger-Fr.svg'
-};
-
-let rssLinks = {};
-localesList.map(function(el) { // eslint-disable-line no-undef
-  let language = el.value;
-  language = language.substring(0, 1).toUpperCase() + language.substring(1, language.length);
-  rssLinks[el.value] = 'http://www.grottocenter.org/html/rss_' + language + '.xml';
-}, this);
-
-let contactLinks = {
-  'fr': ' http://fr.wikicaves.org/contact'
-};
-
-let legalLinks = {};
-localesList.map(function(el) { // eslint-disable-line no-undef
-  let language = el.value;
-  language = language.substring(0, 1).toUpperCase() + language.substring(1, language.length);
-  legalLinks[el.value] = 'https://wiki.grottocenter.org/wiki/GrottoCenter:' + language + '/Legal_and_Privacy_Statement';
-}, this);
+import {licenceLinks, bloggerLinks, bloggerIcons, contactLinks, wikiBatsLinks, rssLinks, legalLinks} from '../../Config';
+import {wikicavesLink, contributorsLink, facebookLink, twitterLink, githubLink} from '../../Config';
+import {paypalLink, paypalImgLink, paypalId} from '../../Config';
 
 class Footer extends Component {
   constructor(props) {
@@ -57,13 +17,13 @@ class Footer extends Component {
   }
 
   render() {
-    let licenceLink = (licenceLinks[this.state.locale] !== undefined) ? licenceLinks[this.state.locale] : 'https://creativecommons.org/licenses/by-sa/3.0/';
-    let wikiBatsLink = (wikiBatsLinks[this.state.locale] !== undefined) ? wikiBatsLinks[this.state.locale] : 'https://wiki.grottocenter.org/wiki/GrottoCenter:Es/bats';
-    let bloggerLink = (bloggerLinks[this.state.locale] !== undefined) ? bloggerLinks[this.state.locale] : 'http://blog-en.grottocenter.org/';
-    let bloggerIcon = (bloggerIcons[this.state.locale] !== undefined) ? bloggerIcons[this.state.locale] : 'blogger-En.svg';
-    let rssLink = (rssLinks[this.state.locale] !== undefined) ? rssLinks[this.state.locale] : 'http://www.grottocenter.org/html/rss_En.xml';
-    let contactLink = (contactLinks[this.state.locale] !== undefined) ? contactLinks[this.state.locale] : 'http://en.wikicaves.org/contact';
-    let legalLink = (legalLinks[this.state.locale] !== undefined) ? legalLinks[this.state.locale] : 'https://wiki.grottocenter.org/wiki/GrottoCenter:En/Legal_and_Privacy_Statement';
+    let licenceLink = (licenceLinks[this.state.locale] !== undefined) ? licenceLinks[this.state.locale] : licenceLinks['*'];
+    let wikiBatsLink = (wikiBatsLinks[this.state.locale] !== undefined) ? wikiBatsLinks[this.state.locale] : wikiBatsLinks['*'];
+    let bloggerLink = (bloggerLinks[this.state.locale] !== undefined) ? bloggerLinks[this.state.locale] : bloggerLinks['*'];
+    let bloggerIcon = (bloggerIcons[this.state.locale] !== undefined) ? bloggerIcons[this.state.locale] : bloggerIcons['*'];
+    let rssLink = (rssLinks[this.state.locale] !== undefined) ? rssLinks[this.state.locale] : rssLinks['*'];
+    let contactLink = (contactLinks[this.state.locale] !== undefined) ? contactLinks[this.state.locale] : contactLinks['*'];
+    let legalLink = (legalLinks[this.state.locale] !== undefined) ? legalLinks[this.state.locale] : legalLinks['*'];
 
     return (
       <div>
@@ -75,7 +35,7 @@ class Footer extends Component {
                 <I18n>Published by</I18n>
               </div>
               <div className="publishedInfo">
-                <GCLink href="http://www.wikicaves.org/">
+                <GCLink href={wikicavesLink}>
                   <img src="/images/logo.svg" alt="logo-wikicaves"/>
                   <br/>
                   <I18n>Wikicaves association</I18n>
@@ -91,7 +51,7 @@ class Footer extends Component {
                   </GCLink>
                 </li>
                 <li>
-                  <GCLink style={{color: this.props.muiTheme.palette.textIconColor}} href="https://wiki.grottocenter.org/wiki/GrottoCenter:Contributors">
+                  <GCLink style={{color: this.props.muiTheme.palette.textIconColor}} href={contributorsLink}>
                     <I18n>Contributors</I18n>
                   </GCLink>
                 </li>
@@ -110,9 +70,9 @@ class Footer extends Component {
 
             <div className="four columns">
               <div className="donate">
-                <form name='donate' action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+                <form name='donate' action={paypalLink} method="post" target="_blank">
                   <input type="hidden" name="cmd" value="_s-xclick" />
-                  <input type="hidden" name="hosted_button_id" value="TJEU7C2TZ356Y" />
+                  <input type="hidden" name="hosted_button_id" value={paypalId} />
                   <FlatButton
                     href="javascript:document.donate.submit()"
                     label={<I18n>Donate now</I18n>}
@@ -121,7 +81,7 @@ class Footer extends Component {
                     hoverColor={this.props.muiTheme.palette.accent1Color}
                     style={{color: this.props.muiTheme.palette.textIconColor}}
                   />
-                <img alt='' src='https://www.paypalobjects.com/fr_FR/i/scr/pixel.gif' width='1' height='1' />
+                <img alt='' src={paypalImgLink} width='1' height='1' />
                 </form>
               </div>
             </div>
@@ -131,7 +91,7 @@ class Footer extends Component {
             <div className="twelve columns">
               <ul className="linksIcon">
                 <li>
-                  <GCLink href="https://www.facebook.com/GrottoCenter">
+                  <GCLink href={facebookLink}>
                     <img src="/images/facebook.svg" alt="Follow us on Facebook"/>
                   </GCLink>
                 </li>
@@ -146,12 +106,12 @@ class Footer extends Component {
                   </GCLink>
                 </li>
                 <li>
-                  <GCLink href="https://twitter.com/grottocenter">
+                  <GCLink href={twitterLink}>
                     <img src="/images/twitter.svg" alt="Follow us on Twitter"/>
                   </GCLink>
                 </li>
                 <li>
-                  <GCLink href="https://github.com/GrottoCenter">
+                  <GCLink href={githubLink}>
                     <img src="/images/github.png" alt="Grottocenter3 on GitHub"/>
                   </GCLink>
                 </li>
@@ -169,7 +129,7 @@ class Footer extends Component {
       <div className="footer" style={{color: this.props.muiTheme.palette.fullBlack, backgroundColor: this.props.muiTheme.palette.primary3Color}}>
         <div className="legal">
           <p>
-            <I18n>Unless stated otherwise, all text and documents are available under the terms of the Creative Commons Attribution-ShareAlike 3.0 Unported.</I18n>
+            <I18n>Unless stated otherwise, all text and documents are available under the terms of the Creative Commons Attribution-ShareAlike 30 Unported</I18n>
           </p>
           <p>
             <GCLink className="licenceIcon" href={licenceLink}>
