@@ -95,7 +95,7 @@ module.exports.routes = {
     action: 'findAll'
   },
 
-  'GET /search/findByBounds': {
+  'GET /api/search/findByBounds': {
     controller: 'Search',
     action: 'findByBounds'
   },
