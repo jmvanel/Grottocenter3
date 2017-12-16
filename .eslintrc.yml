@@ -39,7 +39,10 @@ globals:
   MappingV1Service: true
   L: true
   GeoLocService: true
+  Settings: true
   SettingsService: true
+  ApiKeys: true
+  ApiKeysService: true
 extends: [ 'eslint:recommended' ]
 parserOptions:
   ecmaVersion: 6

@@ -63,7 +63,7 @@ fi;
 
 echo '### Get table names to dump from  Grottocenter V2 database ###'
 TABLES_TO_DUMP=$(ssh -p ${GROTTOCENTER_V2_SSH_PORT} ${GROTTOCENTER_V2_SSH_USER}@${GROTTOCENTER_V2} \
-"mysql -Ne\"SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='grottoce' AND TABLE_TYPE='BASE TABLE' AND TABLE_NAME NOT LIKE 'forum_%' AND TABLE_NAME NOT LIKE 'T_warning'\"")
+"mysql -Ne\"SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='grottoce' AND TABLE_TYPE='BASE TABLE' AND TABLE_NAME NOT LIKE 'forum_%' AND TABLE_NAME NOT LIKE 'T_warning' AND TABLE_NAME NOT LIKE 'settings' AND TABLE_NAME NOT LIKE 'api_keys'\"")
 TABLES_TO_DUMP=$(echo -n $TABLES_TO_DUMP)
 
 echo '### Dump Grottocenter V2 database to local computer ###'

@@ -61,5 +61,5 @@
 module.exports.csrf = {
   grantTokenViaAjax: true,
   origin: '',
-  routesDisabled: '/ui/swagger/'
+  routesDisabled: ['/ui/swagger/', '/api/*']
 };
