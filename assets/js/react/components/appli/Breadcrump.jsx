@@ -71,9 +71,6 @@ const Breadcrump = () => {
       }
     }
   });
-
-breadcrump.splice(-1,1);
-
   return (
     <BreadcrumpBar>
       <StyledHomeIcon />
