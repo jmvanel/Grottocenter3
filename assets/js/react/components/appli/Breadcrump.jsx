@@ -63,8 +63,14 @@ const Breadcrump = () => {
         breadcrump.push(<ChevronIcon key={`c${item}`} />);
       }
       if (breadcrumpKeys[item]) {
+        let url = ''
+        if (breadcrumpKeys[item].localeCompare('Dashboard')) {
+          url = '/';
+        } else if (breadcrumpKeys[item].localeCompare('Map')) {
+          url = '/ui/map';
+        }
         breadcrump.push(
-          <StyledLink internal href="/ui/" key={`l${item}`}>
+          <StyledLink internal href={url} key={`l${item}`}>
             <Translate>{breadcrumpKeys[item]}</Translate>
           </StyledLink>,
         );
