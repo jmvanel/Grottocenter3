@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, { checkPropTypes } from 'prop-types';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import styled from 'styled-components';
 import { withTheme } from '@material-ui/core/styles';
@@ -77,10 +77,11 @@ class PartnersCarousel extends Component {
   }
 
   render() {
-    const rows = [];
+    const rows = this.props.partners ? Array.from(Array(Math.ceil(this.props.partners.length / 5)), () => new Array()) : [];
+    
     this.props.partners
-      && this.props.partners.forEach((partner) => {
-        rows.push(
+      && this.props.partners.forEach((partner, index) => {
+        rows[(Math.ceil((index+1)/5) - 1)].push(
           <PartnerItem
             key={`partcs-${partner.id}`}
             imagePath={`/images/partners/${partner.pictureFileName}`}
@@ -89,13 +90,13 @@ class PartnersCarousel extends Component {
           />,
         );
       });
-
+    
     if (this.props.isFetching) {
       return (<CircularProgress />);
     }
     if (rows.length > 0) {
       return (
-        <PartnerVignettes>{rows}</PartnerVignettes>
+        <PartnerVignettes></PartnerVignettes>
       );
     }
     return (<div />);
