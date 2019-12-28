@@ -1,0 +1,19 @@
+span::after {
+    display: none;
+}
+
+.alice-carousel__dots-item.__active {
+    background-color:#FF9800;
+}
+
+.alice-carousel__dots-item:hover{
+    background-color:#FF9800;
+}
+
+.alice-carousel__dots-item {
+    background-color:#ffd699;
+}
+
+.alice-carousel__dots {
+    margin-top: 0px;
+}

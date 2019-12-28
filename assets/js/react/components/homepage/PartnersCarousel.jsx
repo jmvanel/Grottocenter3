@@ -3,6 +3,9 @@ import PropTypes, { checkPropTypes } from 'prop-types';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import styled from 'styled-components';
 import { withTheme } from '@material-ui/core/styles';
+import AliceCarousel from 'react-alice-carousel';
+import 'react-alice-carousel/lib/alice-carousel.css';
+import './PartnersCarousel.css';
 
 //
 //
@@ -61,6 +64,10 @@ const PartnerVignettes = styled.div`
   text-align: center;
 `;
 
+const CarouselDiv = withTheme()(styled.div`
+  text-align: center;
+`);
+
 //
 //
 // M A I N - C O M P O N E N T
@@ -96,11 +103,25 @@ class PartnersCarousel extends Component {
     }
     if (rows.length > 0) {
       return (
-        <PartnerVignettes></PartnerVignettes>
+        <CarouselDiv>
+          <AliceCarousel 
+            mouseTrackingEnabled
+          >
+            { rows.map(partnersSlide => ItemCarousel(partnersSlide)) }
+          </AliceCarousel> 
+        </CarouselDiv>
       );
     }
     return (<div />);
   }
+}
+
+function ItemCarousel(props) {
+  return (
+    <div>
+      { props.map(partner => partner) }
+    </div>    
+  )
 }
 
 PartnersCarousel.propTypes = {
