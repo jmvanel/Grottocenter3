@@ -14,25 +14,20 @@ import './PartnersCarousel.css';
 //
 
 const PartnerVignette = withTheme()(styled.div`
-  margin-right: 2%;
   margin-left: 2%;
-  margin-bottom: 4%;
+  margin-right: 2%;
+  margin-bottom: 2%;
   background-color: white;
   border: 1px solid ${props => props.theme.palette.primary1Color};
-  box-shadow: ${props => props.theme.palette.blackShadow} 0 1px 6px, ${props => props.theme.palette.blackShadow} 0 1px 4px;
   border-radius: 2%;
-  height: 80px;
-  line-height: 80px;
+  height: 100px;
   overflow: hidden;
   position: relative;
-  padding: 4px;
-  width: 80px;
-  transition: transform 400ms ease;
+  width: 100px;
   display: inline-block;
 
   :hover {
-    transform: scale(1.1, 1.1);
-    transition: transform 200ms ease;
+    transform: scale(1.1);
     cursor: pointer;
   }
 
@@ -44,8 +39,18 @@ const PartnerVignette = withTheme()(styled.div`
 `);
 
 const PartnerImage = styled.img`
-  width: 100%;
-  vertical-align: middle;
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+`;
+
+const CarouselDiv = styled.div`
+  text-align: center;
 `;
 
 const PartnerItem = ({ imagePath, name, onClick }) => (
@@ -59,14 +64,6 @@ PartnerItem.propTypes = {
   name: PropTypes.string,
   onClick: PropTypes.func,
 };
-
-const PartnerVignettes = styled.div`
-  text-align: center;
-`;
-
-const CarouselDiv = withTheme()(styled.div`
-  text-align: center;
-`);
 
 //
 //
@@ -106,17 +103,21 @@ class PartnersCarousel extends Component {
         <CarouselDiv>
           <AliceCarousel 
             mouseTrackingEnabled
+            buttonsDisabled={true}
+            autoPlayInterval={10000}
+            autoPlay={true}   
           >
-            { rows.map(partnersSlide => ItemCarousel(partnersSlide)) }
+            { rows.map(partnersSlide => CarouselSlide(partnersSlide)) }
           </AliceCarousel> 
         </CarouselDiv>
       );
     }
-    return (<div />);
+    return "";
   }
 }
 
-function ItemCarousel(props) {
+// represents the content of one slide of the carousel
+function CarouselSlide(props) {
   return (
     <div>
       { props.map(partner => partner) }
