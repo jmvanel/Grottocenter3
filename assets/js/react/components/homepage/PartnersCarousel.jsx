@@ -121,23 +121,13 @@ class PartnersCarousel extends Component {
             buttonsDisabled={true}
             autoPlayInterval={10000}
             autoPlay={true}   
-          >
-            { rows.map(partnersSlide => CarouselSlide(partnersSlide)) }
-          </AliceCarousel> 
+            items={rows}
+          />
         </CarouselDiv>
       );
     }
     return "";
   }
-}
-
-// represents the content of one slide of the carousel
-function CarouselSlide(props) {
-  return (
-    <div>
-      { props.map(partner => partner) }
-    </div>    
-  )
 }
 
 PartnersCarousel.propTypes = {
