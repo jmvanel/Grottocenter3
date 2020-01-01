@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import PropTypes, { checkPropTypes } from 'prop-types';
+import PropTypes from 'prop-types';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import styled from 'styled-components';
 import { withTheme } from '@material-ui/core/styles';
 import AliceCarousel from 'react-alice-carousel';
 import 'react-alice-carousel/lib/alice-carousel.css';
 import './PartnersCarousel.css';
+import {withGetScreen} from 'react-getscreen';
 
 //
 //
@@ -20,21 +21,30 @@ const PartnerVignette = withTheme()(styled.div`
   background-color: white;
   border: 1px solid ${props => props.theme.palette.primary1Color};
   border-radius: 2%;
-  height: 100px;
   overflow: hidden;
   position: relative;
-  width: 100px;
   display: inline-block;
+  width: 90px;
+  height: 90px;
 
   :hover {
     transform: scale(1.1);
     cursor: pointer;
   }
 
-  @media (min-width: 550px) {
+  @media (min-width: 354px) and (max-width: 515px) {
+    width: 85px;
+    height: 85px;
+  }
+
+  @media (min-width: 354px) {
     margin-right: 1%;
     margin-left: 1%;
-    margin-bottom: 2%;
+  }
+
+  @media (min-width: 708px) {
+    width: 100px;
+    height: 100px;
   }
 `);
 
@@ -81,11 +91,16 @@ class PartnersCarousel extends Component {
   }
 
   render() {
-    const rows = this.props.partners ? Array.from(Array(Math.ceil(this.props.partners.length / 5)), () => new Array()) : [];
+    let numberOfVignettesPerSlide = 5;
+
+    if (this.props.isMobile()) numberOfVignettesPerSlide = 3;
+    else if (this.props.isTablet()) numberOfVignettesPerSlide = 4;
+
+    const rows = this.props.partners ? Array.from(Array(Math.ceil(this.props.partners.length / numberOfVignettesPerSlide)), () => new Array()) : [];
     
     this.props.partners
       && this.props.partners.forEach((partner, index) => {
-        rows[(Math.ceil((index+1)/5) - 1)].push(
+        rows[(Math.ceil((index+1)/numberOfVignettesPerSlide) - 1)].push(
           <PartnerItem
             key={`partcs-${partner.id}`}
             imagePath={`/images/partners/${partner.pictureFileName}`}
@@ -131,4 +146,4 @@ PartnersCarousel.propTypes = {
   partners: PropTypes.any,
 };
 
-export default PartnersCarousel;
+export default withGetScreen(PartnersCarousel);
