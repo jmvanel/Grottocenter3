@@ -1,13 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Toolbar from '@material-ui/core/Toolbar';
+import Menu from '@material-ui/icons/Menu';
 import { withStyles, withTheme } from '@material-ui/core';
 import styled from 'styled-components';
-
+import { isMobile, isBrowser } from 'react-device-detect';
 import HeaderTitle from './HeaderTitle';
 import SideMenuBurgerConnector from '../../containers/SideMenuBurgerConnector';
 import { sideMenuWidth } from '../../conf/Config';
 import Translate from '../common/Translate';
+import QuickSearch from './QuickSearch'
 
 //
 //
@@ -47,14 +49,28 @@ const TitleGroup = withStyles(() => ({
     padding: '0px',
     alignItems: 'center',
     height: '60px',
+    marginRight: 'auto',
+    marginLeft: '30px',
   },
 }), { withTheme: true })(Toolbar);
+
+const WhiteMenu = withStyles(() => ({
+  root: {
+    color: '#fff',
+    marginLeft:'10px',
+  },
+}), { withTheme: true })(Menu);
+
+
+
 
 //
 //
 // M A I N - C O M P O N E N T
 //
 //
+
+
 
 const AppToolbar = (props) => {
   const { pageTitle } = props;
@@ -66,15 +82,29 @@ const AppToolbar = (props) => {
     </StyledPageTitle>
   ) : '';
 
+
   return (
     <StyledToolbar>
-      <TitleGroup>
-        <HeaderTitle title="Grottocenter" subtitle="Achere - 2018" />
-        <SideMenuBurgerConnector />
-      </TitleGroup>
+      {isMobile && (
+          <WhiteMenu />
+      )
+      }
+
+      {isBrowser && (
+        <TitleGroup>
+          <HeaderTitle title="GrottoCenter" subtitle="Achere - 2018" />
+          <SideMenuBurgerConnector />
+        </TitleGroup>
+      )}
       {PageTitleComponent}
+      
+      {isMobile && (
+        <QuickSearch />
+      )
+      }
     </StyledToolbar>
   );
+
 };
 
 AppToolbar.propTypes = {
