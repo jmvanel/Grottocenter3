@@ -1,17 +1,10 @@
-import React, { Component } from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import styled from 'styled-components';
 import { withTheme } from '@material-ui/core/styles';
-import {withGetScreen} from 'react-getscreen';
 import AliceCarousel from 'react-alice-carousel';
 import 'react-alice-carousel/lib/alice-carousel.css';
-
-//
-//
-// S T Y L I N G - C O M P O N E N T S
-//
-//
 
 const PartnerVignette = withTheme()(styled.div`
   margin-left: 2%;
@@ -59,9 +52,18 @@ const PartnerImage = styled.img`
   transform: translate(-50%, -50%);
 `;
 
-const CarouselDiv = styled.div`
+const CarouselDiv = withTheme()(styled.div`
   text-align: center;
-`;
+   width: 100%;
+   li.alice-carousel__dots-item {
+   opacity: 50%;
+    background-color: ${props => props.theme.palette.accent1Color};
+   }
+   li.alice-carousel__dots-item.__active {
+    opacity: 100%;
+    background-color: ${props => props.theme.palette.accent1Color};
+   }
+`);
 
 const PartnerItem = ({ imagePath, name, onClick }) => (
   <PartnerVignette>
@@ -75,59 +77,42 @@ PartnerItem.propTypes = {
   onClick: PropTypes.func,
 };
 
-//
-//
-// M A I N - C O M P O N E N T
-//
-//
+const PartnersCarousel = ({ fetch, partners, isFetching }) => {
+  const isFirstLoad = useRef(true)
+  const rows = partners ? partners.map(({ id, pictureFileName, name, customMessage }) => (
+    <PartnerItem
+      key={`partcs-${id}`}
+      imagePath={`/images/partners/${pictureFileName}`}
+      alt={name}
+      onClick={() => window.open(customMessage, 'grotto_partner')}
+    />
+  )) : [];
 
-class PartnersCarousel extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  componentDidMount() {
-    this.props.fetch();
-  }
-
-  render() {
-    let numberOfVignettesPerSlide = 5;
-
-    if (this.props.isMobile()) numberOfVignettesPerSlide = 3;
-    else if (this.props.isTablet()) numberOfVignettesPerSlide = 4;
-
-    const rows = this.props.partners ? Array.from(Array(Math.ceil(this.props.partners.length / numberOfVignettesPerSlide)), () => new Array()) : [];
-    
-    this.props.partners
-      && this.props.partners.forEach((partner, index) => {
-        rows[(Math.ceil((index+1)/numberOfVignettesPerSlide) - 1)].push(
-          <PartnerItem
-            key={`partcs-${partner.id}`}
-            imagePath={`/images/partners/${partner.pictureFileName}`}
-            alt={partner.name}
-            onClick={() => window.open(partner.customMessage, 'grotto_partner')}
-          />,
-        );
-      });
-    
-    if (this.props.isFetching) {
-      return (<CircularProgress />);
+  useEffect(() => {
+    if (isFirstLoad.current) {
+      fetch();
+      isFirstLoad.current = false;
     }
-    if (rows.length > 0) {
-      return (
-        <CarouselDiv>
-          <AliceCarousel 
-            mouseTrackingEnabled
-            buttonsDisabled={true}
-            autoPlayInterval={10000}
-            autoPlay={true}   
-            items={rows}
-          />
-        </CarouselDiv>
-      );
-    }
-    return "";
+  }, [])
+
+  if (isFetching) {
+    return (<CircularProgress />);
   }
+  else if (rows.length > 0) {
+    return (
+      <CarouselDiv>
+        <AliceCarousel
+          mouseTrackingEnabled
+          buttonsDisabled
+          autoPlayInterval={5000}
+          autoPlay
+          responsive={{ 0: { items: 3 }, 520: { items: 4 }, 1024: { items: 5 } }}
+          items={rows}
+        />
+      </CarouselDiv>
+    );
+  }
+  return null;
 }
 
 PartnersCarousel.propTypes = {
@@ -136,4 +121,4 @@ PartnersCarousel.propTypes = {
   partners: PropTypes.any,
 };
 
-export default withGetScreen(PartnersCarousel);
+export default PartnersCarousel;

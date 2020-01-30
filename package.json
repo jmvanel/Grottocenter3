@@ -34,7 +34,7 @@
     "rc": "~1.2.8",
     "rc-slider": "8.6.5",
     "react": "^16.8.6",
-    "react-alice-carousel": "https://github.com/FatimaMachhouri/Orange-Carousel/tarball/master",
+    "react-alice-carousel": "^1.17.3",
     "react-bootstrap": "^0.32.4",
     "react-csv": "^1.1.1",
     "react-device-detect": "^1.6.2",
