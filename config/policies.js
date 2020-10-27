@@ -42,6 +42,7 @@ module.exports.policies = {
     putOnGroup: 'tokenAuth',
     removeFromGroup: 'tokenAuth',
     setGroups: 'tokenAuth',
+    create: 'tokenAuth',
   },
 
   EntranceController: {

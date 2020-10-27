@@ -32,6 +32,40 @@ tags:
 - name: subjects
 
 paths:
+  '/cavers':
+    post:
+      tags:
+      - cavers
+      description: Create a caver (currently using only a name & surname)
+      parameters:
+      - name: name
+        in: query
+        description: Caver name
+        required: true
+        schema:
+          type: string
+      - name: surname
+        in: query
+        description: Caver surname
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Caver"
+        '401':
+          description: You must be authenticated to create a caver.
+        '403':
+          description: You are not allowed to create a caver
+        '500':
+          description: Internal error
+
   '/cavers/{caverId}/groups/{groupId}':
     put:
       tags:
