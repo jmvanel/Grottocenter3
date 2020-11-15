@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
@@ -19,7 +19,7 @@ import LoginDialog from '../features/Login';
 import QuickSearch from '../features/QuickSearch';
 import AppBar from '../features/AppBar';
 
-import { isAuth } from '../helpers/AuthHelper';
+import { isUserAuth } from '../helpers/AuthHelper';
 
 import DocumentSubmission from './DocumentSubmission';
 import DocumentValidation from './DocumentValidation';
@@ -31,14 +31,9 @@ import ManageUsers from './Admin/ManageUsers';
 
 const Application = () => {
   const dispatch = useDispatch();
-  const [isUserAuth, setIsUserAuth] = useState(false);
   const isSideMenuOpen = useSelector((state) => state.sideMenu.open);
   const authState = useSelector((state) => state.auth);
   const toggleSideMenu = () => dispatch({ type: 'TOGGLE_SIDEMENU' });
-
-  useEffect(() => {
-    setIsUserAuth(isAuth());
-  }, [isUserAuth, authState]);
 
   return (
     <Layout
@@ -49,7 +44,7 @@ const Application = () => {
           HeaderQuickSearch={() => <QuickSearch hasFixWidth={false} />}
         />
       )}
-      isAuth={isUserAuth}
+      isAuth={isUserAuth(authState)}
       isSideMenuOpen={isSideMenuOpen}
       toggleSideMenu={toggleSideMenu}
       SideBarQuickSearch={() => <QuickSearch />}

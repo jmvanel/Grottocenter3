@@ -1,16 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import { List } from '@material-ui/core';
 import Item, { DocumentItems } from './Items';
 import { Icon } from './styles';
-import { isAuth } from '../../../helpers/AuthHelper';
+import { isUserAuth, isUserAdmin } from '../../../helpers/AuthHelper';
 
 const MenuLinks = () => {
-  const [isUserAuth, setIsUserAuth] = useState(false);
   const authState = useSelector((state) => state.auth);
-  useEffect(() => {
-    setIsUserAuth(isAuth());
-  }, [isUserAuth, authState]);
 
   return (
     <List component="nav" aria-label="main mailbox folders">
@@ -21,7 +17,7 @@ const MenuLinks = () => {
         label="Home page"
         href="/"
       />
-      {isUserAuth && (
+      {isUserAuth(authState) && (
         <Item
           ItemIcon={() => (
             <Icon src="/images/sidemenu/dashboard.png" alt="dashboard icon" />
@@ -49,7 +45,7 @@ const MenuLinks = () => {
         label="Toolbox"
         href="#"
       />
-      <DocumentItems isAdmin={isUserAuth} />
+      <DocumentItems isAdmin={isUserAdmin(authState)} />
     </List>
   );
 };
