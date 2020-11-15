@@ -6,7 +6,7 @@ import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 
-import isAuth from '../helpers/AuthHelper';
+import { isAuth } from '../helpers/AuthHelper';
 import { isArticle } from '../components/appli/Document/DocumentForm/DocumentTypesHelper';
 import {
   postDocument,

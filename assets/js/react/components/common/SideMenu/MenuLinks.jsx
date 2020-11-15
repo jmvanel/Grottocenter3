@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { List } from '@material-ui/core';
 import Item, { DocumentItems } from './Items';
 import { Icon } from './styles';
-import isAuth from '../../../helpers/AuthHelper';
+import { isAuth } from '../../../helpers/AuthHelper';
 
 const MenuLinks = () => {
   const [isUserAuth, setIsUserAuth] = useState(false);

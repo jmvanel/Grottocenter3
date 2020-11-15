@@ -48,6 +48,6 @@ export const removeAuthToken = () => {
   window.localStorage.removeItem(identificationTokenName);
 };
 
-export default function isAuth() {
+export const isAuth = () => {
   return getAuthToken() != null;
-}
+};

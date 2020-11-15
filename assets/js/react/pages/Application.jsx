@@ -19,7 +19,7 @@ import LoginDialog from '../features/Login';
 import QuickSearch from '../features/QuickSearch';
 import AppBar from '../features/AppBar';
 
-import isAuth from '../helpers/AuthHelper';
+import { isAuth } from '../helpers/AuthHelper';
 
 import DocumentSubmission from './DocumentSubmission';
 import DocumentValidation from './DocumentValidation';
