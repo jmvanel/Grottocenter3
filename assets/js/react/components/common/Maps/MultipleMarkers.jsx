@@ -13,10 +13,11 @@ import {
 } from 'ramda';
 import { renderToString } from 'react-dom/server';
 import {
-  Map as LeafletMap,
+  MapContainer,
   Marker,
   TileLayer,
   FeatureGroup,
+  useMap,
 } from 'react-leaflet';
 import styled, { css } from 'styled-components';
 import { isMobileOnly } from 'react-device-detect';
@@ -56,7 +57,7 @@ const mapStyle = css`
   margin-bottom: ${({ theme }) => theme.spacing(2)}px;
 `;
 
-const Map = styled(LeafletMap)`
+const Map = styled(MapContainer)`
   ${mapStyle}
 `;
 
@@ -75,6 +76,7 @@ export const isValidPositions = allPass([
 
 const MultipleMarkers = ({ positions, loading }) => {
   const [group, setGroup] = React.useState(null);
+  const map = useMap();
 
   const groupRef = React.useCallback(
     (node) => {
@@ -129,9 +131,16 @@ const MultipleMarkers = ({ positions, loading }) => {
   );
 };
 
-MultipleMarkers.propTypes = {
+const HydratedMultipleMarkers = (props) => (
+  <MapContainer style={mapStyle}>
+    <MultipleMarkers {...props} />
+  </MapContainer>
+);
+
+// eslint-disable-next-line no-multi-assign
+HydratedMultipleMarkers.propTypes = MultipleMarkers.propTypes = {
   positions: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)).isRequired,
   loading: PropTypes.bool,
 };
 
-export default MultipleMarkers;
+export default HydratedMultipleMarkers;

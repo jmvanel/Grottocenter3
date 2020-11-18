@@ -3,8 +3,10 @@ import { storiesOf } from '@storybook/react';
 import { Card as MuiCard } from '@material-ui/core';
 import styled from 'styled-components';
 import { boolean, select } from '@storybook/addon-knobs';
+import * as d3 from 'd3';
 
 import MultipleMarkers from './MultipleMarkers';
+import Clusters from './Clusters';
 
 const Card = styled(MuiCard)`
   margin: ${({ theme }) => theme.spacing(2)}px;
@@ -38,10 +40,55 @@ const MultipleMarkersMap = ({ loading, selection }) => {
   );
 };
 
+const center = [46, 2];
+const latFn = d3.randomNormal(center[0], 1);
+const longFn = d3.randomNormal(center[1], 1);
+const generateRandomCoord = function(intensity = 1000) {
+  const data = [];
+  // eslint-disable-next-line no-plusplus
+  for (let i = 0; i < intensity; i++) {
+    data.push([longFn(), latFn()]);
+  }
+  return data;
+};
+
+const ClustersMap = () => {
+  const entrances = generateRandomCoord(5000);
+  const entrancesMarkers = entrances.map((entrance, i) => ({
+    latitude: entrance[1],
+    longitude: entrance[0],
+    id: i,
+    name: 'name',
+  }));
+  const networks = generateRandomCoord();
+  const networkMarkers = networks.map((network, i) => ({
+    latitude: network[1],
+    longitude: network[0],
+    id: i,
+  }));
+  const organizations = generateRandomCoord(300).map((org, i) => ({
+    latitude: org[1],
+    longitude: org[0],
+    id: i,
+  }));
+  return (
+    <Clusters
+      center={center}
+      zoom={7}
+      entrances={entrances}
+      entranceMarkers={entrancesMarkers}
+      networks={networks}
+      networkMarkers={networkMarkers}
+      organizations={organizations}
+    />
+  );
+};
+
 storiesOf('Maps', module)
   // .add('Single point', () => (
   //   <MapWithState loading={boolean('Loading', false)} />
   // ))
+  .add('Clusters', () => <ClustersMap />)
   .add('Multiple markers', () => (
     <MultipleMarkersMap
       loading={boolean('Loading', false)}
